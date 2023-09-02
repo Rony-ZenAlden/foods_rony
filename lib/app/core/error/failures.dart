@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:foods_rony/app/core/values/app_strings.dart';
+import '../values/app_strings.dart';
 import 'package:get/get.dart';
 
 abstract class Failure extends Equatable {
@@ -16,25 +16,25 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure({
+  ServerFailure({
     String? message,
   }) : super(
-          message: message ?? AppStrings.serverFailure,
+          message: message ?? AppStrings.serverFailure.tr,
         );
 }
 
 class LocalFailure extends Failure {
-  const LocalFailure({
+  LocalFailure({
     String? message,
   }) : super(
-          message: message ?? AppStrings.localFailure,
+          message: message ?? AppStrings.localFailure.tr,
         );
 }
 
 class NoInternetConnectionFailure extends Failure {
-  const NoInternetConnectionFailure({
+  NoInternetConnectionFailure({
     String? message,
   }) : super(
-          message: message ?? AppStrings.noInternetConnection,
+          message: message ?? AppStrings.noInternetConnection.tr,
         );
 }

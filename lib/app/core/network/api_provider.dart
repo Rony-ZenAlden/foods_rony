@@ -1,7 +1,7 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:foods_rony/app/core/values/constants/app_urls.dart';
-import 'package:get/get.dart' as get_package;
+import '../values/constants/app_urls.dart';
 
 import '../values/app_strings.dart';
 import '../values/constants/app_constants.dart';
@@ -15,10 +15,10 @@ class ApiProvider {
       },
       baseUrl: AppUrls.baseUrl,
       receiveTimeout: const Duration(
-        seconds: 1,
+        seconds: 60,
       ),
       connectTimeout: const Duration(
-        seconds: 1,
+        seconds: 60,
       ),
     ),
   );
@@ -28,7 +28,6 @@ class ApiProvider {
     required String url,
     required Map<String, dynamic> data,
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onSendProgress,
@@ -41,8 +40,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -93,7 +90,6 @@ class ApiProvider {
     required String token,
     required FormData data,
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onSendProgress,
@@ -106,8 +102,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -158,7 +152,6 @@ class ApiProvider {
     required String url,
     required Map<String, dynamic> data,
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onSendProgress,
@@ -171,8 +164,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -223,7 +214,6 @@ class ApiProvider {
     required String url,
     required Map<String, dynamic> data,
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onSendProgress,
@@ -236,8 +226,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -289,7 +277,6 @@ class ApiProvider {
     required String token,
     Map<String, dynamic> data = const {},
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onReceiveProgress,
@@ -301,8 +288,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -353,7 +338,6 @@ class ApiProvider {
     Map<String, dynamic> data = const {},
     Map<String, dynamic> queryParameters = const {},
     required String pathToSave,
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(dynamic error) onError,
     Function(int sent, int total)? onReceiveProgress,
@@ -365,8 +349,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.stream;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -418,7 +400,6 @@ class ApiProvider {
     Map<String, dynamic> data = const {},
     Map<String, dynamic> queryParameters = const {},
     required String pathToSave,
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onReceiveProgress,
@@ -430,8 +411,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.bytes;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -492,7 +471,6 @@ class ApiProvider {
     required String url,
     required FormData data,
     Map<String, dynamic> queryParameters = const {},
-    required Function() beforeSend,
     required Function(dynamic data) onSuccess,
     required Function(String errorMessage) onError,
     Function(int sent, int total)? onSendProgress,
@@ -505,8 +483,6 @@ class ApiProvider {
     }
 
     _dio.options.responseType = ResponseType.json;
-
-    beforeSend();
 
     try {
       // LogUtils.infoLog(
@@ -560,7 +536,7 @@ class ApiProvider {
   }) {
     if (response.statusCode != null) {
       onError(
-         'Status code: ${response.statusCode} - ${StatusCodeEnum.from(
+        'Status code: ${response.statusCode} - ${StatusCodeEnum.from(
           code: response.statusCode!,
         ).message}',
       );
@@ -573,12 +549,13 @@ class ApiProvider {
   ) {
     // Send substring of exception message
     // TODO: Make UI for showing messages scrollable
+    final exceptionMessage = exception.toString();
     onError(
       // exception.toString(),
-      exception.toString().substring(
-            0,
-            AppConstants.maxExceptionMessageLength,
-          ),
+      exceptionMessage.substring(
+        0,
+        exceptionMessage.length > AppConstants.maxExceptionMessageLength ? AppConstants.maxExceptionMessageLength : exceptionMessage.length,
+      ),
     );
 
     // Log complete exception message
