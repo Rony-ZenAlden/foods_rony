@@ -1,29 +1,28 @@
-import 'package:foods_rony/app/features/auth/presentation/ui/login_ui_event.dart';
-import 'package:foods_rony/app/features/auth/presentation/ui/login_ui_state.dart';
 import 'package:get/get.dart';
 
-import '../../../core/error/failures.dart';
-import '../../../core/storage/app_storage.dart';
-import '../../../core/utils/app_alert_utils.dart';
-import '../../../core/values/app_colors.dart';
-import '../../../core/values/app_strings.dart';
-import '../../../routes/app_pages.dart';
-import '../core/utils/auth_user_utils.dart';
-import '../domain/entities/login_data.dart';
-import '../domain/use_cases/login_use_case.dart';
+import '../../../../core/error/export_error.dart';
+import '../../../../core/storage/app_storage.dart';
+import '../../../../core/utils/app_alert_utils.dart';
+import '../../../../core/values/export/export_values.dart';
+import '../../../../routes/app_pages.dart';
+import '../../core/utils/auth_user_utils.dart';
+import '../../domain/entities/login_data.dart';
+import '../../domain/use_cases/login_use_case.dart';
+import 'ui/login_ui_event.dart';
+import 'ui/login_ui_state.dart';
 
 class LoginController extends GetxController {
   //region State
 
   final state = LoginUiState.defaultObj().obs;
 
-//endregion State
+  //endregion State
 
   //region Use Cases
 
   final LoginUseCase _loginUseCase;
 
-//endregion Use Cases
+  //endregion Use Cases
 
   //region Constructors
 
@@ -31,7 +30,7 @@ class LoginController extends GetxController {
     required LoginUseCase loginUseCase,
   }) : _loginUseCase = loginUseCase;
 
-//endregion Constructors
+  //endregion Constructors
 
   //region Lifecycle
 
@@ -63,7 +62,7 @@ class LoginController extends GetxController {
     return super.onDelete;
   }
 
-//endregion Lifecycle
+  //endregion Lifecycle
 
   //region Public functions
 
@@ -87,11 +86,9 @@ class LoginController extends GetxController {
     }
   }
 
-//endregion Public functions
+  //endregion Public functions
 
-//region Private functions
-
-//endregion Private functions for dealing with events
+  //region Private functions
 
   //region Private functions for dealing with events
 
@@ -132,7 +129,7 @@ class LoginController extends GetxController {
     );
 
     result.fold(
-          (Failure failure) {
+      (Failure failure) {
         AppAlertUtils.showSnackBar(
           title: AppStrings.alertError.tr,
           message: failure.message,
@@ -145,7 +142,7 @@ class LoginController extends GetxController {
           ),
         );
       },
-          (LoginData data) async {
+      (LoginData data) async {
         state(
           state().copyWith(
             isLoading: false,
@@ -176,12 +173,11 @@ class LoginController extends GetxController {
     );
   }
 
-//endregion Private functions for dealing with events
+  //endregion Private functions for dealing with events
 
   void _workers() {}
 
   void _processArguments() {}
 
 //endregion Private functions
-
 }

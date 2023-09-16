@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../core/values/app_dimensions.dart';
-import '../../../../../core/values/constants/app_assets.dart';
+
+import '../../../../../../core/values/export/export_values.dart';
 import '../../login_controller.dart';
 
 
