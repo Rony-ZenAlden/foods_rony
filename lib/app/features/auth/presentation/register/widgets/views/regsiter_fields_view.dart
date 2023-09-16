@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../core/values/app_dimensions.dart';
-import '../../../../../core/values/app_strings.dart';
-import '../../../../../global_widgets/app_text_field_widget.dart';
-import '../../login_controller.dart';
 
-class LoginFieldsView extends GetView<LoginController> {
-  const LoginFieldsView({
+import '../../../../../../core/values/export/export_values.dart';
+import '../../../../../../global_widgets/export/export_global_widgets.dart';
+import '../../register_controller.dart';
+
+class RegisterFieldsView extends GetView<RegisterController> {
+  const RegisterFieldsView({
     Key? key,
   }) : super(key: key);
 
@@ -14,6 +14,17 @@ class LoginFieldsView extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // NickName
+        AppTextFieldWidget(
+          controller: controller.state().nickNameController,
+          hintText: AppStrings.nickName.tr,
+        ),
+
+        // Space
+        const SizedBox(
+          height: AppDimensions.paddingOrMargin08,
+        ),
+
         // PhoneNumber
         AppTextFieldWidget(
           controller: controller.state().phoneNumberController,
